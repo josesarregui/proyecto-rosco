@@ -1,0 +1,280 @@
+/* Asegura que lo que tiene la clase 'oculto' realmente desaparezca */
+.oculto {
+    display: none !important;
+}
+
+/* General */
+body {
+    font-family: 'Poppins', sans-serif; /* Una fuente más moderna */
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* Fondo degradado como la imagen */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Aseguramos que el contenedor de letras ocupe todo el espacio */
+#letras-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+/* El contenedor blanco tipo tarjeta */
+.pantalla {
+    background-color: white;
+    padding: 40px;
+    border-radius: 24px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    /* ELIMINAMOS el width: 350px fijo de aquí */
+    width: 100%; 
+    max-width: 400px; /* Ancho para los menús de inicio */
+    text-align: center;
+    color: #333;
+    box-sizing: border-box; /* Asegura que el padding no ensanche la caja */
+}
+
+h1, h2 {
+    color: #2d3436;
+    margin-bottom: 20px;
+}
+
+/* Ajustamos la pantalla para que sea lo suficientemente ancha para la rosca */
+#pantalla-dinamica {
+    width: 95%;
+    max-width: 600px !important;
+    min-height: 850px; /* Mantenemos buena altura */
+    padding: 30px;
+    display: flex;
+    flex-direction: column; /* Alineación vertical */
+}
+
+#contenido-dinamico {
+    flex: 1; /* CREAMOS: Esto hace que ocupe todo el espacio disponible */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Botones estilo moderno */
+button {
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 50px; /* Botones totalmente redondeados */
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+/* Botón principal (Azul) */
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    transform: scale(1.02);
+}
+
+/* Botón secundario (Gris claro) */
+.btn-secondary {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.btn-secondary:hover {
+    background-color: #e0e0e0;
+}
+
+/* Iconos o logos */
+.logo-modo {
+    font-size: 50px;
+    margin-bottom: 15px;
+    display: block;
+}
+
+/* Este es el contenedor que debe estar centrado */
+.stop-game-container {
+    position: relative;
+    width: 100%;
+    height: 480px; /* Ajustamos la altura del área de la rosca */
+    margin-top: 20px;
+}
+
+.rosca-roja {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    background-color: #e74c3c;
+    border-radius: 50%;
+    margin: 20px 0;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
+}
+
+.letra-stop {
+    position: absolute;
+    width: 42px;
+    height: 42px;
+    background: white;
+    color: #007bff;
+    border: 2px solid #007bff;
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 1rem;
+    display: flex; /* Centrado interno */
+    justify-content: center;
+    align-items: center;
+    transform: translate(-50%, -50%);
+    padding: 0;
+    line-height: 0; /* Evita que la letra se suba o baje */
+}
+
+/* Estado bloqueado (como si ya se hubiera usado) */
+.letra-stop.bloqueada {
+    background: #d1d8e0; /* Gris claro */
+    color: #7f8c8d;     /* Gris oscuro para el texto */
+    border-color: #a5b1c2;
+    opacity: 0.8;
+    transform: translate(-50%, -50%) scale(0.9);
+    pointer-events: none;
+}
+
+/* El botón de la mano ahora estará siempre en el centro exacto */
+.btn-centro {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px; /* Aumentamos de 80px a 100px */
+    height: 100px;
+    border-radius: 50%;
+    background: #f0f0f0; /* Un gris muy suave */
+    border: 5px solid #007bff;
+    font-size: 3rem; /* Mano más grande */
+    cursor: pointer;
+    z-index: 5;
+    transition: transform 0.1s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-centro:active {
+    transform: translate(-50%, -50%) scale(0.9); /* Efecto de hundimiento */
+    background-color: #e0e0e0;
+}
+
+.timer-display {
+    margin-top: 50px;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #e74c3c;
+    background: white;
+    padding: 10px;
+    border-radius: 20px;
+    border: 3px solid #e74c3c;
+    width: 90%; 
+    max-width: 500px;
+    text-align: center;
+    align-self: center;
+}
+
+/* AGREGAMOS estilos para la lista de temáticas */
+.lista-temas {
+    margin-top: 10px;
+    /* EDITAMOS: Quitamos flex: 1 para que no se estire sola */
+    flex: none; 
+    max-height: 420px; /* Un poco más de margen para el scroll */
+    overflow-y: auto;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.espaciador {
+    flex-grow: 1; /* Este elemento invisible es el que ocupará el hueco blanco */
+}
+
+.item-tematica {
+    display: flex;
+    align-items: center;
+    background: #f8f9fa;
+    margin-bottom: 8px;
+    padding: 10px;
+    border-radius: 12px;
+    color: #333;
+}
+
+.item-tematica input {
+    margin-right: 15px;
+    transform: scale(1.5); /* Checkbox más grande */
+}
+
+.item-tematica span {
+    flex-grow: 1;
+    font-weight: 500;
+}
+
+.btn-borrar {
+    background: none;
+    color: #e74c3c;
+    width: auto;
+    padding: 5px;
+    margin: 0;
+}
+
+.input-grupo {
+    display: flex;
+    gap: 10px;
+    height: 45px; /* EDITAMOS: Definimos una altura fija para ambos */
+    margin-bottom: 25px;
+    width: 100%;
+}
+
+.input-grupo input {
+    flex: 3;
+    height: 100%; /* EDITAMOS: Ocupa todo el alto del contenedor */
+    padding: 0 20px;
+    border-radius: 50px;
+    border: 1px solid #ddd;
+    font-size: 0.95rem;
+    text-align: center;
+    box-sizing: border-box; /* Asegura que el padding no lo agrande */
+    outline: none;
+}
+
+.btn-add {
+    flex: 1;
+    height: 100%; /* EDITAMOS: Ocupa todo el alto del contenedor */
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.4rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0; /* Quitamos padding que pueda deformarlo */
+    line-height: 0;
+    transition: background 0.2s;
+}
+
+.btn-add:hover {
+    background-color: #0056b3;
+}
+
+/* CREAMOS estilo para el botón de Reset */
+.btn-reset {
+    margin-top: 20px;
+    font-size: 0.9rem;
+    background-color: #f8d7da; /* Color rojizo suave para reset */
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
