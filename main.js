@@ -24,11 +24,15 @@ function irALobby(modo) {
     const icono = document.getElementById('icono-modo');
     
     if (modo === 'stop') {
-        titulo.innerText = 'Modo STOP';
-        icono.innerText = '🛑'; // Logo de STOP
+        // Borramos el texto del título
+        titulo.innerText = ''; 
+        
+        // Insertamos solo la imagen
+        icono.innerHTML = `<img src="stop.png" alt="STOP" class="img-lobby-stop">`;
     } else {
+        // Configuración para el Rosco (puedes dejarlo como estaba o ajustarlo)
         titulo.innerText = 'Rosco Clásico';
-        icono.innerText = '🎡'; // Logo de Rosco
+        icono.innerHTML = '🎡';
     }
     
     mostrarPantalla('pantalla-lobby');
@@ -61,10 +65,10 @@ function gestionarCategorias() {
     });
 
     contenedor.innerHTML = `
-        <h3>Temáticas para ${modoActual.toUpperCase()}</h3>
+        <h3>Temáticas</h3>
         
         <div class="input-grupo">
-            <input type="text" id="nuevo-tema" placeholder="Ingrese nueva temática...">
+            <input type="text" id="nuevo-tema" placeholder="Ingrese nueva temática ...">
             <button class="btn-add" onclick="agregarTematica()">+</button>
         </div>
 

@@ -3,17 +3,6 @@ let tiempoRestante = 10;
 let intervaloTemporizador = null;
 let juegoActivo = false;
 
-/* EDITAMOS la función bajarLetra para que reinicie el tiempo al marcar una letra */
-function bajarLetra(elemento) {
-    if (juegoActivo && !elemento.classList.contains('bloqueada')) {
-        elemento.classList.add('bloqueada');
-        
-        // Reiniciamos el tiempo a 10 cada vez que alguien "baja" una letra
-        tiempoRestante = 10;
-        actualizarInterfazTimer();
-    }
-}
-
 /* CREAMOS la función para que el timer se vea en pantalla */
 function actualizarInterfazTimer() {
     const display = document.getElementById('timer');
@@ -22,22 +11,27 @@ function actualizarInterfazTimer() {
     }
 }
 
-/* EDITAMOS la función para que el rosco aparezca centrado y con buen tamaño */
+/* EDITAMOS la función para reubicar la temática y mejorar el texto inicial */
 function renderizarRoscaSTOP() {
     const contenedor = document.getElementById('contenido-dinamico');
     contenedor.innerHTML = `
+        <div class="tematica-container">
+            <div id="nombre-tematica" class="tematica-display">
+                Presiona la mano para comenzar...
+            </div>
+        </div>
+
         <div class="stop-game-container">
             <div id="letras-container"></div>
             <button class="btn-centro" id="btn-principal" onclick="presionarCentro()">✋</button>
         </div>
+
         <div id="timer" class="timer-display">10</div>
-        <h3 id="tematica-actual" style="margin-top: 30px;">Temática: <span id="nombre-tematica">Selecciona...</span></h3>
     `;
 
+    // ... el resto del código para generar las letras (A-Z) se mantiene igual ...
     const letrasContainer = document.getElementById('letras-container');
     const letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".split("");
-    
-    /* EDITAMOS el radio a 200px. Es el equilibrio perfecto para el ancho de 600px */
     const radio = 200; 
     
     letras.forEach((letra, i) => {
@@ -49,7 +43,6 @@ function renderizarRoscaSTOP() {
         botonLetra.className = 'letra-stop';
         botonLetra.innerText = letra;
         
-        /* EDITAMOS la posición para que use el centro del contenedor de 600px */
         botonLetra.style.left = `calc(50% + ${x}px)`;
         botonLetra.style.top = `calc(50% + ${y}px)`;
         
@@ -59,14 +52,73 @@ function renderizarRoscaSTOP() {
 }
 
 function bajarLetra(elemento) {
-    if (!elemento.classList.contains('bloqueada')) {
+    if (juegoActivo && !elemento.classList.contains('bloqueada')) {
         elemento.classList.add('bloqueada');
-        // Aquí reiniciaremos el temporizador más adelante
-        console.log("Letra bloqueada:", elemento.innerText);
+        
+        // Reiniciamos el tiempo
+        tiempoRestante = 10;
+        actualizarInterfazTimer();
+
+        // --- CORRECCIÓN AQUÍ ---
+        // Cambiamos '.letra-rosco' por '.letra-stop' para que coincida con tu HTML
+        const letrasRestantes = document.querySelectorAll('.letra-stop:not(.bloqueada)');
+        
+        if (letrasRestantes.length === 0) {
+            finalizarJuego("¡Felicidades! Completaron todo el rosco.");
+        }
     }
 }
 
 function presionarCentro() {
-    alert("¡Empezar juego!");
-    // Aquí iniciaremos el timer y elegiremos temática
+
+    if (juegoActivo) return;
+
+    // Limpieza de letras bloqueadas
+    const letrasBloqueadas = document.querySelectorAll('.letra-stop.bloqueada');
+    letrasBloqueadas.forEach(letra => letra.classList.remove('bloqueada'));
+
+    const temasValidos = listaTematicas.filter(t => t.seleccionada);
+
+    if (temasValidos.length === 0) {
+        alert("¡Debes seleccionar al menos una temática!");
+        return;
+    }
+
+    const temaSorteado = temasValidos[Math.floor(Math.random() * temasValidos.length)];
+
+    const etiquetaTema = document.getElementById('nombre-tematica');
+    etiquetaTema.innerText = temaSorteado.nombre;
+    etiquetaTema.style.color = "#2c3e50"; // Un azul muy oscuro o negro
+    etiquetaTema.style.fontWeight = "bold";
+
+    empezarReloj();
+}
+
+/* CREAMOS la lógica del cronómetro */
+function empezarReloj() {
+    juegoActivo = true;
+    tiempoRestante = 10;
+    actualizarInterfazTimer();
+
+    if (intervaloTemporizador) clearInterval(intervaloTemporizador);
+
+    intervaloTemporizador = setInterval(() => {
+        tiempoRestante--;
+        actualizarInterfazTimer();
+
+        if (tiempoRestante <= 0) {
+            clearInterval(intervaloTemporizador);
+            juegoActivo = false;
+            alert("¡STOP! Se acabó el tiempo.");
+        }
+    }, 1000);
+}
+
+function finalizarJuego(mensaje) {
+    clearInterval(intervaloTemporizador);
+    juegoActivo = false; // Al ponerlo en false, habilitamos que presionarCentro() funcione de nuevo
+    
+    setTimeout(() => {
+        alert(mensaje || "¡STOP! Se acabó el tiempo.");
+    }, 100); 
 }

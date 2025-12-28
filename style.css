@@ -73,12 +73,12 @@ button {
 
 /* Botón principal (Azul) */
 .btn-primary {
-    background-color: #007bff;
+    background-color: #e92222;
     color: white;
 }
 
 .btn-primary:hover {
-    background-color: #0056b3;
+    background-color: #ff0000d3;
     transform: scale(1.02);
 }
 
@@ -188,7 +188,6 @@ button {
 /* AGREGAMOS estilos para la lista de temáticas */
 .lista-temas {
     margin-top: 10px;
-    /* EDITAMOS: Quitamos flex: 1 para que no se estire sola */
     flex: none; 
     max-height: 420px; /* Un poco más de margen para el scroll */
     overflow-y: auto;
@@ -229,41 +228,40 @@ button {
 }
 
 .input-grupo {
-    display: flex;
-    gap: 10px;
-    height: 45px; /* EDITAMOS: Definimos una altura fija para ambos */
-    margin-bottom: 25px;
+    display: flex;       /* Alinea los hijos en línea */
+    align-items: center; /* Centra verticalmente ambos elementos */
+    justify-content: center;
+    gap: 10px;          /* Espacio entre el input y el botón */
+    margin-bottom: 20px;
     width: 100%;
 }
 
 .input-grupo input {
-    flex: 3;
-    height: 100%; /* EDITAMOS: Ocupa todo el alto del contenedor */
-    padding: 0 20px;
-    border-radius: 50px;
+    flex-grow: 1;       /* Hace que el input ocupe el espacio disponible */
+    height: 45px;       /* Altura fija para el input */
+    padding: 0 15px;
     border: 1px solid #ddd;
-    font-size: 0.95rem;
-    text-align: center;
-    box-sizing: border-box; /* Asegura que el padding no lo agrande */
+    border-radius: 25px;
+    font-size: 1rem;
     outline: none;
+    box-sizing: border-box; /* Asegura que el padding no agrande el input */
+    text-align: center;
 }
 
 .btn-add {
-    flex: 1;
-    height: 100%; /* EDITAMOS: Ocupa todo el alto del contenedor */
+    width: 45px;        /* Misma medida que el height para que sea un círculo */
+    height: 45px;       /* IGUAL a la altura del input */
     background-color: #007bff;
     color: white;
     border: none;
-    border-radius: 50px;
-    font-size: 1.4rem;
-    font-weight: bold;
+    border-radius: 50%; /* Lo hace perfectamente redondo */
+    font-size: 1.5rem;
     cursor: pointer;
     display: flex;
-    justify-content: center;
     align-items: center;
-    padding: 0; /* Quitamos padding que pueda deformarlo */
-    line-height: 0;
-    transition: background 0.2s;
+    justify-content: center;
+    flex-shrink: 0;     /* Evita que el botón se deforme */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
 .btn-add:hover {
@@ -277,4 +275,41 @@ button {
     background-color: #f8d7da; /* Color rojizo suave para reset */
     color: #721c24;
     border: 1px solid #f5c6cb;
+}
+
+/* Contenedor para centrar la cápsula */
+.tematica-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 25px;
+}
+
+/* Diseño de la cápsula de temática */
+.tematica-display {
+    min-width: 200px;         /* Ancho mínimo para que no se vea muy chico */
+    width: fit-content;      /* Se ajusta al largo del texto */
+    padding: 10px 30px;
+    border: 3px solid #3498db; /* Azul vibrante (distinto al rojo del timer) */
+    border-radius: 50px;      /* Forma de cápsula */
+    background-color: white;
+    color: #888;              /* Color gris para la instrucción inicial */
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.img-lobby-stop {
+    width: 180px;      /* Aumentamos el tamaño significativamente */
+    height: auto;
+    display: block;
+    margin: 20px auto; /* Centrado con espacio arriba y abajo */
+    transition: transform 0.3s ease; /* Efecto suave si decides animarla */
+}
+
+#titulo-lobby {
+    margin: 0;
+    padding: 0;
 }

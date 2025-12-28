@@ -9,17 +9,17 @@
 <body>
 
     <section id="pantalla-inicio" class="pantalla">
-        <span class="logo-modo">🕵️‍♂️</span> <h1>¡Bienvenido!</h1>
+        <span class="logo-modo">🎯</span> <h1>¡Bienvenido!</h1>
         <p>Elige un juego para comenzar</p>
-        <button class="btn-primary" onclick="irALobby('stop')">Modo STOP</button>
+        <button class="btn-primary" onclick="irALobby('stop')">STOP</button>
         <button class="btn-secondary" onclick="irALobby('rosco')">Rosco Clásico</button>
     </section>
 
     <section id="pantalla-lobby" class="pantalla oculto">
         <span id="icono-modo" class="logo-modo"></span>
         <h2 id="titulo-lobby">Modo Juego</h2>
-        <button class="btn-primary" onclick="iniciarJuego()">Jugar Local</button>
-        <button class="btn-secondary" onclick="gestionarCategorias()">Mis Categorías</button>
+        <button class="btn-primary" onclick="iniciarJuego()">Jugar</button>
+        <button class="btn-secondary" onclick="gestionarCategorias()">Temáticas</button>
         <button class="btn-secondary" onclick="mostrarPantalla('pantalla-inicio')">Volver</button>
     </section>
 
