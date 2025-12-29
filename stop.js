@@ -30,7 +30,6 @@ function renderizarRoscaSTOP() {
 
         <div id="timer" class="timer-display">10</div>
         
-        <button class="btn-volver" onclick="irALobby('stop')">Volver</button>
     `;
 
     const letrasContainer = document.getElementById('letras-container');
@@ -132,4 +131,18 @@ function finalizarJuego(mensaje) {
     setTimeout(() => {
         alert(mensaje || "¡STOP! Se acabó el tiempo.");
     }, 100); 
+}
+
+function volverAlLobbyDesdeJuego() {
+    // 1. Detenemos el reloj usando el nombre exacto de tu variable
+    if (typeof intervaloTemporizador !== 'undefined') {
+        clearInterval(intervaloTemporizador);
+    }
+    
+    // 2. Reseteamos las variables de control
+    juegoActivo = false;
+    tiempoRestante = 10;
+    
+    // 3. Volvemos al lobby
+    mostrarPantalla('pantalla-lobby');
 }

@@ -5,8 +5,8 @@
 
 /* General */
 body {
-    font-family: 'Poppins', sans-serif; /* Una fuente más moderna */
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* Fondo degradado como la imagen */
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -17,18 +17,18 @@ body {
 /* Aseguramos que el contenedor de letras ocupe todo el espacio */
 #letras-container {
     width: 100%;
-    height: 320px; /* Reducimos un poco el alto para celular */
+    height: 320px;
     position: relative;
     margin: 20px 0;
 }
 
 /* Aplicar a todas las pantallas (lobby, juego, bienvenida) */
 .pantalla {
-    min-height: 90vh; /* Ocupa casi todo el alto del celular siempre */
+    min-height: 90vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start; /* Alinea todo desde arriba uniformemente */
+    justify-content: center; /* Cambiado a center para evitar el vacío arriba */
     padding: 20px;
     box-sizing: border-box;
 }
@@ -39,31 +39,49 @@ body {
 #contenido-dinamico {
     background-color: white !important;
     width: 90%;
-    max-width: 450px; /* Tamaño ideal para que no se vea gigante en PC pero entre en celular */
+    max-width: 450px;
     margin: 20px auto;
-    padding: 25px;
+    padding: 30px; /* Un poco más de aire interno */
     border-radius: 25px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    min-height: 550px; /* Altura mínima para que todas sean iguales */
+    min-height: 600px; /* Aumentado un poco para que sea imponente */
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center; /* Centra el contenido dentro de la tarjeta */
     box-sizing: border-box;
 }
 
 h1, h2 {
     color: #2d3436;
     margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Ajustes específicos para la Pantalla de Inicio (Paso 3) */
+#pantalla-inicio .btn-primary, 
+#pantalla-inicio .btn-secondary {
+    width: 100%;          /* Igual que en el lobby */
+    max-width: 300px;     /* Ancho estándar de tus otros botones */
+    padding: 15px;        /* El mismo padding que tienen tus botones generales */
+    font-size: 1rem;      /* Tamaño de letra estándar */
+    margin: 10px 0;       /* Misma separación */
+    border-radius: 50px;  /* Mantener el estilo redondeado */
+}
+
+#pantalla-inicio {
+    gap: 0px;             /* Espacio mínimo entre elementos */
+    justify-content: center;
 }
 
 /* Ajustamos la pantalla para que sea lo suficientemente ancha para la rosca */
 #pantalla-dinamica {
     width: 95%;
     max-width: 600px !important;
-    min-height: 850px; /* Mantenemos buena altura */
+    min-height: 850px;
     padding: 30px;
     display: flex;
-    flex-direction: column; /* Alineación vertical */
+    flex-direction: column;
 }
 
 #contenido-dinamico {
@@ -83,14 +101,13 @@ button {
     padding: 15px;
     margin: 10px 0;
     border: none;
-    border-radius: 50px; /* Botones totalmente redondeados */
+    border-radius: 50px;
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
     transition: transform 0.2s, background-color 0.2s;
 }
 
-/* Botón principal (Azul) */
 .btn-primary {
     background-color: #e92222;
     color: white;
@@ -101,7 +118,6 @@ button {
     transform: scale(1.02);
 }
 
-/* Botón secundario (Gris claro) */
 .btn-secondary {
     background-color: #f0f0f0;
     color: #333;
@@ -118,12 +134,12 @@ button {
     display: block;
 }
 
-/* Este es el contenedor que debe estar centrado */
+/* Contenedor rosco centrado */
 .stop-game-container {
     position: relative;
     width: 100%;
-    max-width: 400px; /* Tamaño máximo en PC */
-    aspect-ratio: 1 / 1; /* Mantiene el círculo perfecto */
+    max-width: 400px;
+    aspect-ratio: 1 / 1;
     margin: 0 auto;
     display: flex;
     align-items: center;
@@ -138,20 +154,10 @@ button {
     }
     
     .btn-centro {
-        width: 60px !important;
-        height: 60px !important;
-        font-size: 1.5rem !important;
+        width: 65px !important;
+        height: 65px !important;
+        font-size: 1.8rem !important;
     }
-}
-
-.rosca-roja {
-    position: relative;
-    width: 300px;
-    height: 300px;
-    background-color: #e74c3c;
-    border-radius: 50%;
-    margin: 20px 0;
-    box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
 }
 
 .letra-stop {
@@ -164,36 +170,34 @@ button {
     border-radius: 50%;
     font-weight: bold;
     font-size: 1rem;
-    display: flex; /* Centrado interno */
+    display: flex;
     justify-content: center;
     align-items: center;
     transform: translate(-50%, -50%);
     padding: 0;
-    line-height: 0; /* Evita que la letra se suba o baje */
+    line-height: 0;
 }
 
-/* Estado bloqueado (como si ya se hubiera usado) */
 .letra-stop.bloqueada {
-    background: #d1d8e0; /* Gris claro */
-    color: #7f8c8d;     /* Gris oscuro para el texto */
+    background: #d1d8e0;
+    color: #7f8c8d;
     border-color: #a5b1c2;
     opacity: 0.8;
     transform: translate(-50%, -50%) scale(0.9);
     pointer-events: none;
 }
 
-/* El botón de la mano ahora estará siempre en el centro exacto */
 .btn-centro {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 100px; /* Aumentamos de 80px a 100px */
+    width: 100px;
     height: 100px;
     border-radius: 50%;
-    background: #f0f0f0; /* Un gris muy suave */
+    background: #f0f0f0;
     border: 5px solid #007bff;
-    font-size: 3rem; /* Mano más grande */
+    font-size: 3rem;
     cursor: pointer;
     z-index: 5;
     transition: transform 0.1s;
@@ -203,7 +207,7 @@ button {
 }
 
 .btn-centro:active {
-    transform: translate(-50%, -50%) scale(0.9); /* Efecto de hundimiento */
+    transform: translate(-50%, -50%) scale(0.9);
     background-color: #e0e0e0;
 }
 
@@ -222,18 +226,13 @@ button {
     align-self: center;
 }
 
-/* AGREGAMOS estilos para la lista de temáticas */
 .lista-temas {
     margin-top: 10px;
     flex: none; 
-    max-height: 420px; /* Un poco más de margen para el scroll */
+    max-height: 420px;
     overflow-y: auto;
     text-align: left;
     margin-bottom: 10px;
-}
-
-.espaciador {
-    flex-grow: 1; /* Este elemento invisible es el que ocupará el hueco blanco */
 }
 
 .item-tematica {
@@ -248,73 +247,49 @@ button {
 
 .item-tematica input {
     margin-right: 15px;
-    transform: scale(1.5); /* Checkbox más grande */
-}
-
-.item-tematica span {
-    flex-grow: 1;
-    font-weight: 500;
-}
-
-.btn-borrar {
-    background: none;
-    color: #e74c3c;
-    width: auto;
-    padding: 5px;
-    margin: 0;
+    transform: scale(1.5);
 }
 
 .input-grupo {
-    display: flex;       /* Alinea los hijos en línea */
-    align-items: center; /* Centra verticalmente ambos elementos */
+    display: flex;
+    align-items: center;
     justify-content: center;
-    gap: 10px;          /* Espacio entre el input y el botón */
+    gap: 10px;
     margin-bottom: 20px;
     width: 100%;
 }
 
 .input-grupo input {
-    flex-grow: 1;       /* Hace que el input ocupe el espacio disponible */
-    height: 45px;       /* Altura fija para el input */
+    flex-grow: 1;
+    height: 45px;
     padding: 0 15px;
     border: 1px solid #ddd;
     border-radius: 25px;
     font-size: 1rem;
-    outline: none;
-    box-sizing: border-box; /* Asegura que el padding no agrande el input */
     text-align: center;
 }
 
 .btn-add {
-    width: 45px;        /* Misma medida que el height para que sea un círculo */
-    height: 45px;       /* IGUAL a la altura del input */
+    width: 45px;
+    height: 45px;
     background-color: #007bff;
     color: white;
-    border: none;
-    border-radius: 50%; /* Lo hace perfectamente redondo */
+    border-radius: 50%;
     font-size: 1.5rem;
-    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;     /* Evita que el botón se deforme */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    flex-shrink: 0;
 }
 
-.btn-add:hover {
-    background-color: #0056b3;
-}
-
-/* CREAMOS estilo para el botón de Reset */
 .btn-reset {
     margin-top: 20px;
     font-size: 0.9rem;
-    background-color: #f8d7da; /* Color rojizo suave para reset */
+    background-color: #f8d7da;
     color: #721c24;
     border: 1px solid #f5c6cb;
 }
 
-/* Contenedor para centrar la cápsula */
 .tematica-container {
     display: flex;
     justify-content: center;
@@ -322,31 +297,45 @@ button {
     margin-bottom: 25px;
 }
 
-/* Diseño de la cápsula de temática */
 .tematica-display {
-    min-width: 200px;         /* Ancho mínimo para que no se vea muy chico */
-    width: fit-content;      /* Se ajusta al largo del texto */
+    min-width: 200px;
+    width: fit-content;
     padding: 10px 30px;
-    border: 3px solid #3498db; /* Azul vibrante (distinto al rojo del timer) */
-    border-radius: 50px;      /* Forma de cápsula */
+    border: 3px solid #3498db;
+    border-radius: 50px;
     background-color: white;
-    color: #888;              /* Color gris para la instrucción inicial */
+    color: #888;
     font-size: 1.1rem;
     font-weight: 500;
     text-align: center;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    transition: all 0.3s ease;
 }
 
 .img-lobby-stop {
-    width: 180px;      /* Aumentamos el tamaño significativamente */
+    width: 180px;
     height: auto;
     display: block;
-    margin: 20px auto; /* Centrado con espacio arriba y abajo */
-    transition: transform 0.3s ease; /* Efecto suave si decides animarla */
+    margin: 20px auto;
 }
 
 #titulo-lobby {
     margin: 0;
     padding: 0;
+}
+
+/* Contenedor para centrar y dar espacio */
+.contenedor-video {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+/* El video propiamente dicho */
+.video-bienvenida {
+    width: 220px;         
+    height: 220px;
+    border-radius: 50%;   /* Esto lo hace totalmente circular */
+    object-fit: cover;
+    pointer-events: none;
+    margin-bottom: 15px;
 }

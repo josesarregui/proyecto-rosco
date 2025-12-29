@@ -5,11 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Proyecto Rosco</title>
     <link rel="stylesheet" href="style.css">
+    <link rel= "icon" href="niquito.jpg" />
 </head>
 <body>
 
     <section id="pantalla-inicio" class="pantalla">
-        <span class="logo-modo">🎯</span> <h1>¡Bienvenido!</h1>
+        <div class="contenedor-video">
+            <video autoplay loop muted playsinline class="video-bienvenida">
+                <source src="fabri.mp4" type="video/mp4">
+                Tu navegador no soporta videos.
+            </video>
+        </div>
+        <h1>¡Bienvenido!</h1>
         <p>Elige un juego para comenzar</p>
         <button class="btn-primary" onclick="irALobby('stop')">STOP</button>
         <button class="btn-secondary" onclick="irALobby('rosco')">Rosco Clásico</button>
@@ -25,7 +32,7 @@
 
     <section id="pantalla-dinamica" class="pantalla oculto">
         <div id="contenido-dinamico"></div>
-        <button class="btn-secondary" onclick="mostrarPantalla('pantalla-lobby')">Volver</button>
+        <button class="btn-secondary" onclick="volverAlLobbyDesdeJuego()">Volver</button>
     </section>
 
     <script src="main.js"></script>
