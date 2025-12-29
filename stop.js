@@ -11,11 +11,11 @@ function actualizarInterfazTimer() {
     }
 }
 
-/* EDITAMOS la función para reubicar la temática y mejorar el texto inicial */
 function renderizarRoscaSTOP() {
+    // Usamos el ID de la sección principal para asegurar el ancho
     const contenedorPrincipal = document.getElementById('contenido-dinamico');
     
-    // 1. Inyectamos la estructura HTML
+    // 1. Estructura HTML (Limpiamos el botón volver extra que estaba arriba)
     contenedorPrincipal.innerHTML = `
         <div class="tematica-container">
             <div id="nombre-tematica" class="tematica-display">
@@ -29,20 +29,22 @@ function renderizarRoscaSTOP() {
         </div>
 
         <div id="timer" class="timer-display">10</div>
+        
         <button class="btn-volver" onclick="irALobby('stop')">Volver</button>
     `;
 
-    // 2. Referencia al contenedor de letras y cálculo de dimensiones
     const letrasContainer = document.getElementById('letras-container');
     const letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".split("");
     
-    // Medimos el ancho real del contenedor para que el radio sea dinámico
-    const ancho = letrasContainer.offsetWidth > 0 ? letrasContainer.offsetWidth : 320;
+    // 2. Cálculo del ancho para que no sea angosto
+    // Forzamos al contenedor a medir lo mismo que la tarjeta blanca
+    const ancho = letrasContainer.clientWidth || 320;
     
-    // El radio es el 40% del ancho (multiplicar por 0.8 del total / 2)
-    const radio = (ancho / 2) * 0.8; 
+    // 3. Espaciado de las letras: reducimos el radio un poco más
+    // Si el radio es muy grande, las letras se pegan al borde. 
+    // Bajamos de 0.8 a 0.7 para darles "aire" por fuera.
+    const radio = (ancho / 2) * 0.92; 
     
-    // 3. Generación de letras posicionadas matemáticamente
     letras.forEach((letra, i) => {
         const angulo = (i * (360 / letras.length)) * (Math.PI / 180) - (Math.PI / 2);
         const x = Math.cos(angulo) * radio;
@@ -52,7 +54,6 @@ function renderizarRoscaSTOP() {
         botonLetra.className = 'letra-stop';
         botonLetra.innerText = letra;
         
-        // Posicionamiento desde el centro usando las coordenadas calculadas
         botonLetra.style.left = `calc(50% + ${x}px)`;
         botonLetra.style.top = `calc(50% + ${y}px)`;
         
