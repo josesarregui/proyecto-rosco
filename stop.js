@@ -13,8 +13,10 @@ function actualizarInterfazTimer() {
 
 /* EDITAMOS la función para reubicar la temática y mejorar el texto inicial */
 function renderizarRoscaSTOP() {
-    const contenedor = document.getElementById('contenido-dinamico');
-    contenedor.innerHTML = `
+    const contenedorPrincipal = document.getElementById('contenido-dinamico');
+    
+    // 1. Inyectamos la estructura HTML
+    contenedorPrincipal.innerHTML = `
         <div class="tematica-container">
             <div id="nombre-tematica" class="tematica-display">
                 Presiona la mano para comenzar...
@@ -23,19 +25,24 @@ function renderizarRoscaSTOP() {
 
         <div class="stop-game-container">
             <div id="letras-container"></div>
-            <button class="btn-centro" id="btn-principal" onclick="presionarCentro()">✋</button>
+            <button class="btn-centro" id="id-btn-principal" onclick="presionarCentro()">✋</button>
         </div>
 
         <div id="timer" class="timer-display">10</div>
+        <button class="btn-volver" onclick="irALobby('stop')">Volver</button>
     `;
 
-    // ... el resto del código para generar las letras (A-Z) se mantiene igual ...
+    // 2. Referencia al contenedor de letras y cálculo de dimensiones
     const letrasContainer = document.getElementById('letras-container');
     const letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".split("");
-    // El radio será el 40% del ancho del contenedor (así se adapta al celular)
-    const contenedorAncho = document.getElementById('letras-container').offsetWidth || 350;
-    const radio = (contenedorAncho / 2) * 0.8;
     
+    // Medimos el ancho real del contenedor para que el radio sea dinámico
+    const ancho = letrasContainer.offsetWidth > 0 ? letrasContainer.offsetWidth : 320;
+    
+    // El radio es el 40% del ancho (multiplicar por 0.8 del total / 2)
+    const radio = (ancho / 2) * 0.8; 
+    
+    // 3. Generación de letras posicionadas matemáticamente
     letras.forEach((letra, i) => {
         const angulo = (i * (360 / letras.length)) * (Math.PI / 180) - (Math.PI / 2);
         const x = Math.cos(angulo) * radio;
@@ -45,6 +52,7 @@ function renderizarRoscaSTOP() {
         botonLetra.className = 'letra-stop';
         botonLetra.innerText = letra;
         
+        // Posicionamiento desde el centro usando las coordenadas calculadas
         botonLetra.style.left = `calc(50% + ${x}px)`;
         botonLetra.style.top = `calc(50% + ${y}px)`;
         

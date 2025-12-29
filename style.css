@@ -16,11 +16,10 @@ body {
 
 /* Aseguramos que el contenedor de letras ocupe todo el espacio */
 #letras-container {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
+    position: relative;
+    width: 100%;       /* Ocupa el ancho de la tarjeta blanca */
+    height: 350px;     /* Altura suficiente para el círculo */
+    margin: 20px 0;
 }
 
 /* Aplicar a todas las pantallas (lobby, juego, bienvenida) */
