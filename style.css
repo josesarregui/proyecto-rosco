@@ -23,18 +23,33 @@ body {
     left: 0;
 }
 
-/* El contenedor blanco tipo tarjeta */
+/* Aplicar a todas las pantallas (lobby, juego, bienvenida) */
 .pantalla {
-    background-color: white;
-    padding: 40px;
-    border-radius: 24px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    /* ELIMINAMOS el width: 350px fijo de aquí */
-    width: 100%; 
-    max-width: 400px; /* Ancho para los menús de inicio */
-    text-align: center;
-    color: #333;
-    box-sizing: border-box; /* Asegura que el padding no ensanche la caja */
+    min-height: 90vh; /* Ocupa casi todo el alto del celular siempre */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* Alinea todo desde arriba uniformemente */
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* El contenedor blanco (la tarjeta) donde está el juego */
+#pantalla-inicio, 
+#pantalla-lobby, 
+#contenido-dinamico {
+    background-color: white !important;
+    width: 90%;
+    max-width: 450px; /* Tamaño ideal para que no se vea gigante en PC pero entre en celular */
+    margin: 20px auto;
+    padding: 25px;
+    border-radius: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    min-height: 550px; /* Altura mínima para que todas sean iguales */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
 }
 
 h1, h2 {
@@ -103,8 +118,20 @@ button {
 .stop-game-container {
     position: relative;
     width: 100%;
-    height: 480px; /* Ajustamos la altura del área de la rosca */
-    margin-top: 20px;
+    max-width: 400px; /* Tamaño máximo en PC */
+    aspect-ratio: 1 / 1; /* Mantiene el círculo perfecto */
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 480px) {
+    .letra-stop {
+        width: 30px !important;  /* Letras un poco más chicas */
+        height: 30px !important;
+        font-size: 0.8rem !important;
+    }
 }
 
 .rosca-roja {

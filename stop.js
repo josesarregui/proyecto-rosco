@@ -32,7 +32,9 @@ function renderizarRoscaSTOP() {
     // ... el resto del código para generar las letras (A-Z) se mantiene igual ...
     const letrasContainer = document.getElementById('letras-container');
     const letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".split("");
-    const radio = 200; 
+    // El radio será el 40% del ancho del contenedor (así se adapta al celular)
+    const contenedorAncho = document.getElementById('letras-container').offsetWidth || 350;
+    const radio = (contenedorAncho / 2) * 0.8;
     
     letras.forEach((letra, i) => {
         const angulo = (i * (360 / letras.length)) * (Math.PI / 180) - (Math.PI / 2);
