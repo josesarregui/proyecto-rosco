@@ -17,9 +17,9 @@ body {
 /* Aseguramos que el contenedor de letras ocupe todo el espacio */
 #letras-container {
     width: 100%;
-    height: 320px;
+    height: 400px; /* Aumentamos de 320px o 350px a 400px */
     position: relative;
-    margin: 20px 0;
+    margin: 30px 0; /* Más espacio arriba y abajo */
 }
 
 /* Aplicar a todas las pantallas (lobby, juego, bienvenida) */
@@ -187,12 +187,10 @@ button {
 }
 
 .letra-stop.bloqueada {
-    background: #d1d8e0;
-    color: #7f8c8d;
-    border-color: #a5b1c2;
-    opacity: 0.8;
-    transform: translate(-50%, -50%) scale(0.9);
+    background: #d1d8e0 !important;
+    color: #7f8c8d !important;
     pointer-events: none;
+    transform: translate(-50%, -50%) !important; /* Mantiene el anclaje */
 }
 
 .btn-centro {
@@ -368,4 +366,36 @@ button:disabled {
     cursor: not-allowed !important;
     transform: none !important; /* Evita el efecto de escala al pasar el mouse */
     opacity: 0.7;
+}
+
+/* 1. Regla específica para las letras del rosco */
+.letra-stop.bloqueada {
+    filter: grayscale(100%);
+    opacity: 0.5;
+    pointer-events: none;
+    /* Mantiene la letra en su lugar exacto del círculo */
+    transform: translate(-50%, -50%) scale(0.9) !important; 
+}
+
+/* 2. Regla para botones normales deshabilitados (como el de Rosco Clásico) */
+button:disabled {
+    filter: grayscale(100%);
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: not-allowed;
+    /* Los botones normales no se mueven, solo se achican un poco si quieres */
+    transform: scale(0.95); 
+}
+
+/* Mejora la legibilidad del temporizador cuando queda poco tiempo */
+.timer-urgente {
+    color: #ff0000 !important;
+    animation: sacudida 0.2s infinite;
+}
+
+@keyframes sacudida {
+    0% { transform: translate(0); }
+    25% { transform: translate(2px); }
+    75% { transform: translate(-2px); }
+    100% { transform: translate(0); }
 }

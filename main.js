@@ -47,40 +47,27 @@ function iniciarJuego() {
     }
 }
 
-/* EDITAMOS la función para insertar el espaciador antes de los botones */
 function gestionarCategorias() {
     mostrarPantalla('pantalla-dinamica');
     const contenedor = document.getElementById('contenido-dinamico');
-    
-    let htmlTemas = '';
-    listaTematicas.forEach((tema, index) => {
-        htmlTemas += `
-            <div class="item-tematica">
-                <input type="checkbox" ${tema.seleccionada ? 'checked' : ''} 
-                       onclick="toggleTematica(${index})">
-                <span>${tema.nombre}</span>
-                <button class="btn-borrar" onclick="borrarTematica(${index})">🗑️</button>
-            </div>
-        `;
-    });
+
+    // Usar .map() es más moderno y evita errores de concatenación
+    const htmlTemas = listaTematicas.map((tema, index) => `
+        <div class="item-tematica">
+            <input type="checkbox" ${tema.seleccionada ? 'checked' : ''} onclick="toggleTematica(${index})">
+            <span>${tema.nombre}</span>
+            <button class="btn-borrar" onclick="borrarTematica(${index})">🗑️</button>
+        </div>
+    `).join('');
 
     contenedor.innerHTML = `
         <h3>Temáticas</h3>
-        
         <div class="input-grupo">
-            <input type="text" id="nuevo-tema" placeholder="Ingrese nueva temática ...">
+            <input type="text" id="nuevo-tema" placeholder="Nueva temática ...">
             <button class="btn-add" onclick="agregarTematica()">+</button>
         </div>
-
-        <div class="lista-temas">
-            ${htmlTemas}
-        </div>
-
-        <div class="espaciador"></div>
-
-        <div class="acciones-inferiores">
-            <button class="btn-secondary btn-reset" onclick="resetearTematicas()">Restablecer Originales</button>
-        </div>
+        <div class="lista-temas">${htmlTemas}</div>
+        <button class="btn-secondary btn-reset" onclick="resetearTematicas()">Resetar Originales</button>
     `;
 }
 

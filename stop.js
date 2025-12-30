@@ -15,7 +15,7 @@ function renderizarRoscaSTOP() {
     // Usamos el ID de la sección principal para asegurar el ancho
     const contenedorPrincipal = document.getElementById('contenido-dinamico');
     
-    // 1. Estructura HTML (Limpiamos el botón volver extra que estaba arriba)
+    // 1. Estructura HTML
     contenedorPrincipal.innerHTML = `
         <div class="tematica-container">
             <div id="nombre-tematica" class="tematica-display">
@@ -29,16 +29,18 @@ function renderizarRoscaSTOP() {
         </div>
 
         <div id="timer" class="timer-display">10</div>
-        
     `;
 
     const letrasContainer = document.getElementById('letras-container');
     const letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".split("");
     
-    const ancho = letrasContainer.offsetWidth || 350; 
-    const radio = (ancho / 2) * 0.92; 
+    // --- MEJORA AQUÍ: Cálculo robusto del radio ---
+    const rect = letrasContainer.getBoundingClientRect();
+    const medidaReferencia = rect.width || 350;
+    const radio = (medidaReferencia / 2) * 1.0;
     
     letras.forEach((letra, i) => {
+        // Cálculo del ángulo para distribuir las letras en círculo
         const angulo = (i * (360 / letras.length)) * (Math.PI / 180) - (Math.PI / 2);
         const x = Math.cos(angulo) * radio;
         const y = Math.sin(angulo) * radio;
@@ -47,6 +49,7 @@ function renderizarRoscaSTOP() {
         botonLetra.className = 'letra-stop';
         botonLetra.innerText = letra;
         
+        // Posicionamiento absoluto basado en el centro del contenedor
         botonLetra.style.left = `calc(50% + ${x}px)`;
         botonLetra.style.top = `calc(50% + ${y}px)`;
         
@@ -56,18 +59,28 @@ function renderizarRoscaSTOP() {
 }
 
 function bajarLetra(elemento) {
+    // Solo actuamos si el juego está activo y la letra no fue pulsada antes
     if (juegoActivo && !elemento.classList.contains('bloqueada')) {
+        
+        // 1. Aplicamos la clase que la pone gris (el CSS ahora la mantiene en su sitio)
         elemento.classList.add('bloqueada');
         
-        // REINICIO ROBUSTO DEL TIEMPO
-        clearInterval(intervaloTemporizador); 
+        // 2. REINICIO DEL TIEMPO
+        // Es vital limpiar el intervalo actual antes de empezar uno nuevo
+        if (intervaloTemporizador) {
+            clearInterval(intervaloTemporizador);
+        }
+
+        // Reseteamos a 10 segundos
         tiempoRestante = 10;
         actualizarInterfazTimer();
         
-        // Volvemos a arrancar el intervalo
+        // 3. Volvemos a arrancar el cronómetro para el siguiente turno
         empezarReloj(); 
 
+        // 4. Verificación de final de juego
         const letrasRestantes = document.querySelectorAll('.letra-stop:not(.bloqueada)');
+        
         if (letrasRestantes.length === 0) {
             finalizarJuego("¡Felicidades! Completaron todo el rosco.");
         }
@@ -99,10 +112,14 @@ function presionarCentro() {
     empezarReloj();
 }
 
-/* CREAMOS la lógica del cronómetro */
 function empezarReloj() {
     juegoActivo = true;
     tiempoRestante = 10;
+    
+    const display = document.getElementById('timer');
+    display.classList.remove('timer-urgente');
+    display.style.color = "#e74c3c"; 
+    
     actualizarInterfazTimer();
 
     if (intervaloTemporizador) clearInterval(intervaloTemporizador);
@@ -111,10 +128,14 @@ function empezarReloj() {
         tiempoRestante--;
         actualizarInterfazTimer();
 
+        if (tiempoRestante <= 3 && tiempoRestante > 0) {
+            display.classList.add('timer-urgente');
+        }
+
         if (tiempoRestante <= 0) {
-            clearInterval(intervaloTemporizador);
-            juegoActivo = false;
-            alert("¡STOP! Se acabó el tiempo.");
+            // DETENER ANIMACIÓN: La quitamos justo al llegar a 0
+            display.classList.remove('timer-urgente');
+            finalizarJuego("¡STOP! Se acabó el tiempo.");
         }
     }, 1000);
 }
@@ -123,8 +144,8 @@ function finalizarJuego(mensaje) {
     clearInterval(intervaloTemporizador);
     juegoActivo = false;
     
-    // Cambiamos el color a rojo para indicar finalización
-    document.getElementById('timer').style.color = "#888"; 
+    const display = document.getElementById('timer');
+    display.classList.remove('timer-urgente'); // Por seguridad
     
     setTimeout(() => {
         alert(mensaje);
