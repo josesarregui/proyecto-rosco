@@ -28,7 +28,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center; /* Cambiado a center para evitar el vacío arriba */
+    justify-content: center;
     padding: 20px;
     box-sizing: border-box;
 }
@@ -41,14 +41,15 @@ body {
     width: 90%;
     max-width: 450px;
     margin: 20px auto;
-    padding: 30px; /* Un poco más de aire interno */
+    padding: 30px;
     border-radius: 25px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    min-height: 600px; /* Aumentado un poco para que sea imponente */
+    min-height: 600px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center; /* Centra el contenido dentro de la tarjeta */
+    /* CAMBIO CLAVE: Cambiamos center por space-between */
+    justify-content: space-between; 
     box-sizing: border-box;
 }
 
@@ -58,41 +59,43 @@ h1, h2 {
     text-align: center;
 }
 
-/* Ajustes específicos para la Pantalla de Inicio (Paso 3) */
+/* Ajustes específicos para la Pantalla de Inicio */
 #pantalla-inicio .btn-primary, 
 #pantalla-inicio .btn-secondary {
-    width: 100%;          /* Igual que en el lobby */
-    max-width: 300px;     /* Ancho estándar de tus otros botones */
-    padding: 15px;        /* El mismo padding que tienen tus botones generales */
-    font-size: 1rem;      /* Tamaño de letra estándar */
-    margin: 10px 0;       /* Misma separación */
-    border-radius: 50px;  /* Mantener el estilo redondeado */
+    width: 100%;
+    max-width: 300px;
+    padding: 15px;
+    font-size: 1rem;
+    margin: 10px 0;
+    border-radius: 50px;
 }
 
 #pantalla-inicio {
-    gap: 0px;             /* Espacio mínimo entre elementos */
+    gap: 0px;
     justify-content: center;
 }
 
-/* Ajustamos la pantalla para que sea lo suficientemente ancha para la rosca */
+/* Pantalla del Juego a ancho completo */
 #pantalla-dinamica {
-    width: 95%;
+    width: 100%;
     max-width: 600px !important;
-    min-height: 850px;
-    padding: 30px;
+    min-height: 100vh;
+    padding: 10px 0;
     display: flex;
     flex-direction: column;
 }
 
 #contenido-dinamico {
-    width: 90% !important;
+    width: 100% !important;
     min-width: 320px;
-    max-width: 450px;
-    margin: 20px auto;
+    max-width: 500px;
+    margin: 10px auto;
     background: white;
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 15px;
+    box-sizing: border-box;
 }
 
 /* Botones estilo moderno */
@@ -146,6 +149,7 @@ button {
     justify-content: center;
 }
 
+/* Ajuste de letras para móvil */
 @media (max-width: 480px) {
     .letra-stop {
         width: 28px !important;
@@ -157,6 +161,10 @@ button {
         width: 65px !important;
         height: 65px !important;
         font-size: 1.8rem !important;
+    }
+
+    #contenido-dinamico {
+        border-radius: 0; /* Gana espacio en los bordes del cel */
     }
 }
 
@@ -206,11 +214,6 @@ button {
     align-items: center;
 }
 
-.btn-centro:active {
-    transform: translate(-50%, -50%) scale(0.9);
-    background-color: #e0e0e0;
-}
-
 .timer-display {
     margin-top: 50px;
     font-size: 2.5rem;
@@ -226,37 +229,63 @@ button {
     align-self: center;
 }
 
+/* Sección de Temáticas - Corrección de alineación */
 .lista-temas {
     margin-top: 10px;
-    flex: none; 
-    max-height: 420px;
+    width: 100%;
+    /* Permitimos que esta sección crezca para empujar al botón de reset hacia abajo */
+    flex-grow: 1; 
+    max-height: 400px;
     overflow-y: auto;
-    text-align: left;
     margin-bottom: 10px;
 }
 
 .item-tematica {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     background: #f8f9fa;
     margin-bottom: 8px;
-    padding: 10px;
+    padding: 10px 15px;
     border-radius: 12px;
     color: #333;
+    gap: 12px;
 }
 
 .item-tematica input {
-    margin-right: 15px;
+    flex-shrink: 0;
     transform: scale(1.5);
+    margin: 0 5px 0 0;
 }
 
-.input-grupo {
+.item-tematica span {
+    flex-grow: 1;
+    text-align: left;
+    word-break: break-word;
+    font-size: 0.95rem;
+}
+
+.btn-borrar {
+    background: #eeeeee;
+    color: #e74c3c;
+    width: 45px;
+    height: 35px;
+    border-radius: 15px;
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
+    font-size: 1.1rem;
+}
+
+/* Inputs de agregar temática */
+.input-grupo {
+    display: flex;
+    align-items: center;
     gap: 10px;
     margin-bottom: 20px;
     width: 100%;
+    flex-shrink: 0; /* Evita que se aplaste */
 }
 
 .input-grupo input {
@@ -265,7 +294,6 @@ button {
     padding: 0 15px;
     border: 1px solid #ddd;
     border-radius: 25px;
-    font-size: 1rem;
     text-align: center;
 }
 
@@ -275,19 +303,37 @@ button {
     background-color: #007bff;
     color: white;
     border-radius: 50%;
-    font-size: 1.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
 }
 
+/* Pantalla Bienvenida - Video Circular */
+.contenedor-video {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.video-bienvenida {
+    width: 220px;         
+    height: 220px;
+    border-radius: 50%;
+    object-fit: cover;
+    pointer-events: none;
+    margin-bottom: 15px;
+    border: 3px solid #000000;
+}
+
+/* Reset y Títulos */
 .btn-reset {
-    margin-top: 20px;
+    margin-top: auto; /* Refuerza que se quede abajo */
     font-size: 0.9rem;
     background-color: #f8d7da;
     color: #721c24;
-    border: 1px solid #f5c6cb;
+    flex-shrink: 0;
 }
 
 .tematica-container {
@@ -299,43 +345,27 @@ button {
 
 .tematica-display {
     min-width: 200px;
-    width: fit-content;
     padding: 10px 30px;
     border: 3px solid #3498db;
     border-radius: 50px;
     background-color: white;
     color: #888;
-    font-size: 1.1rem;
-    font-weight: 500;
     text-align: center;
 }
 
 .img-lobby-stop {
-    width: 180px;
-    height: auto;
+    width: 200px;  /* Ajusta el tamaño */
+    height: 200px;
+    object-fit: contain;
     display: block;
-    margin: 20px auto;
+    margin: 0 auto;
 }
 
-#titulo-lobby {
-    margin: 0;
-    padding: 0;
-}
-
-/* Contenedor para centrar y dar espacio */
-.contenedor-video {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-bottom: 10px;
-}
-
-/* El video propiamente dicho */
-.video-bienvenida {
-    width: 220px;         
-    height: 220px;
-    border-radius: 50%;   /* Esto lo hace totalmente circular */
-    object-fit: cover;
-    pointer-events: none;
-    margin-bottom: 15px;
+/* Estilo para cualquier botón deshabilitado */
+button:disabled {
+    background-color: #d1d8e0 !important;
+    color: #a5b1c2 !important;
+    cursor: not-allowed !important;
+    transform: none !important; /* Evita el efecto de escala al pasar el mouse */
+    opacity: 0.7;
 }

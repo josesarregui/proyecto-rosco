@@ -35,13 +35,7 @@ function renderizarRoscaSTOP() {
     const letrasContainer = document.getElementById('letras-container');
     const letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".split("");
     
-    // 2. Cálculo del ancho para que no sea angosto
-    // Forzamos al contenedor a medir lo mismo que la tarjeta blanca
-    const ancho = letrasContainer.clientWidth || 320;
-    
-    // 3. Espaciado de las letras: reducimos el radio un poco más
-    // Si el radio es muy grande, las letras se pegan al borde. 
-    // Bajamos de 0.8 a 0.7 para darles "aire" por fuera.
+    const ancho = letrasContainer.offsetWidth || 350; 
     const radio = (ancho / 2) * 0.92; 
     
     letras.forEach((letra, i) => {
@@ -65,14 +59,15 @@ function bajarLetra(elemento) {
     if (juegoActivo && !elemento.classList.contains('bloqueada')) {
         elemento.classList.add('bloqueada');
         
-        // Reiniciamos el tiempo
+        // REINICIO ROBUSTO DEL TIEMPO
+        clearInterval(intervaloTemporizador); 
         tiempoRestante = 10;
         actualizarInterfazTimer();
-
-        // --- CORRECCIÓN AQUÍ ---
-        // Cambiamos '.letra-rosco' por '.letra-stop' para que coincida con tu HTML
-        const letrasRestantes = document.querySelectorAll('.letra-stop:not(.bloqueada)');
         
+        // Volvemos a arrancar el intervalo
+        empezarReloj(); 
+
+        const letrasRestantes = document.querySelectorAll('.letra-stop:not(.bloqueada)');
         if (letrasRestantes.length === 0) {
             finalizarJuego("¡Felicidades! Completaron todo el rosco.");
         }
@@ -126,10 +121,14 @@ function empezarReloj() {
 
 function finalizarJuego(mensaje) {
     clearInterval(intervaloTemporizador);
-    juegoActivo = false; // Al ponerlo en false, habilitamos que presionarCentro() funcione de nuevo
+    juegoActivo = false;
+    
+    // Cambiamos el color a rojo para indicar finalización
+    document.getElementById('timer').style.color = "#888"; 
     
     setTimeout(() => {
-        alert(mensaje || "¡STOP! Se acabó el tiempo.");
+        alert(mensaje);
+        document.getElementById('nombre-tematica').innerText = "Presiona la mano para comenzar...";
     }, 100); 
 }
 

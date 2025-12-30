@@ -11,7 +11,7 @@
 
     <section id="pantalla-inicio" class="pantalla">
         <div class="contenedor-video">
-            <video autoplay loop muted playsinline class="video-bienvenida">
+            <video autoplay loop muted playsinline preload="auto" class="video-bienvenida">
                 <source src="fabri.mp4" type="video/mp4">
                 Tu navegador no soporta videos.
             </video>
@@ -19,7 +19,7 @@
         <h1>¡Bienvenido!</h1>
         <p>Elige un juego para comenzar</p>
         <button class="btn-primary" onclick="irALobby('stop')">STOP</button>
-        <button class="btn-secondary" onclick="irALobby('rosco')">Rosco Clásico</button>
+        <button class="btn-secondary" onclick="irALobby('rosco')" disabled>Rosco Clásico (Próximamente)</button>
     </section>
 
     <section id="pantalla-lobby" class="pantalla oculto">
