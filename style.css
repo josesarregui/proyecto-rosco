@@ -152,29 +152,36 @@ button {
 
 /* Ajuste de letras para móvil */
 @media (max-width: 480px) {
-    .letra-stop {
-        /* ANTES: 28px (Muy chico) -> AHORA: 42px (Ideal para dedo) */
-        width: 42px !important;
-        height: 42px !important;
-        
-        /* Texto más grande dentro de la bola */
-        font-size: 1.3rem !important; 
-        
-        /* Reducimos el margen del borde para ganar espacio */
-        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    }
-    
-    .btn-centro {
-        /* La mano central también un poco más grande */
-        width: 75px !important;
-        height: 75px !important;
-        font-size: 2.2rem !important;
+    /* CONTENEDOR: Aseguramos que no sea más ancho que la pantalla */
+    #letras-container {
+        width: 100% !important;
+        height: 360px !important; /* Altura fija para evitar saltos */
+        margin: 0 auto;
+        padding: 0 !important;
     }
 
+    /* LETRAS: Bajamos a 34px para que no se amontonen */
+    .letra-stop {
+        width: 34px !important;
+        height: 34px !important;
+        font-size: 16px !important; /* Texto legible */
+        margin: 0 !important;       /* Quitamos márgenes extraños */
+        
+        /* Sombra suave para que resalten */
+        box-shadow: 0 2px 3px rgba(0,0,0,0.2);
+    }
+    
+    /* MANO CENTRAL: Ajuste proporcional */
+    .btn-centro {
+        width: 60px !important;
+        height: 60px !important;
+        font-size: 2rem !important;
+    }
+
+    /* TARJETA BLANCA: Maximizamos espacio lateral */
     #contenido-dinamico {
-        /* Quitamos padding lateral excesivo en celular para que entre el rosco */
-        padding: 15px 5px !important; 
-        width: 95% !important;
+        padding: 10px 2px !important; /* Casi sin padding a los costados */
+        width: 100% !important;
     }
 }
 
