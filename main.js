@@ -101,3 +101,17 @@ function resetearTematicas() {
         gestionarCategorias(); // Esto redibuja los botones con el nuevo CSS
     }
 }
+
+function activarPantallaCompleta() {
+    if (!document.fullscreenElement) {
+        // Intentar entrar en pantalla completa
+        document.documentElement.requestFullscreen().catch((e) => {
+            console.log("El navegador no permitió pantalla completa: ", e);
+        });
+    } else {
+        // Salir de pantalla completa
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        }
+    }
+}

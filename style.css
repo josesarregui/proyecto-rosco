@@ -71,6 +71,7 @@ h1, h2 {
 }
 
 #pantalla-inicio {
+    position: relative;
     gap: 0px;
     justify-content: center;
 }
@@ -152,19 +153,28 @@ button {
 /* Ajuste de letras para móvil */
 @media (max-width: 480px) {
     .letra-stop {
-        width: 28px !important;
-        height: 28px !important;
-        font-size: 0.75rem !important;
+        /* ANTES: 28px (Muy chico) -> AHORA: 42px (Ideal para dedo) */
+        width: 42px !important;
+        height: 42px !important;
+        
+        /* Texto más grande dentro de la bola */
+        font-size: 1.3rem !important; 
+        
+        /* Reducimos el margen del borde para ganar espacio */
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
     
     .btn-centro {
-        width: 65px !important;
-        height: 65px !important;
-        font-size: 1.8rem !important;
+        /* La mano central también un poco más grande */
+        width: 75px !important;
+        height: 75px !important;
+        font-size: 2.2rem !important;
     }
 
     #contenido-dinamico {
-        border-radius: 0; /* Gana espacio en los bordes del cel */
+        /* Quitamos padding lateral excesivo en celular para que entre el rosco */
+        padding: 15px 5px !important; 
+        width: 95% !important;
     }
 }
 
@@ -398,4 +408,26 @@ button:disabled {
     25% { transform: translate(2px); }
     75% { transform: translate(-2px); }
     100% { transform: translate(0); }
+}
+
+.btn-fullscreen {
+    position: absolute; /* Lo sacamos del flujo normal para que no empuje el logo */
+    top: 15px;
+    right: 15px;
+    width: 45px !important;  /* Forzamos el tamaño para que sea cuadrado */
+    height: 45px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-size: 1.2rem;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 100;
+}
+
+.btn-fullscreen:hover {
+    background-color: #e0e0e0;
+    transform: scale(1.05);
 }
