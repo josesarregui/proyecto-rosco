@@ -37,7 +37,7 @@ function renderizarRoscaSTOP() {
     // --- MEJORA AQUÍ: Cálculo robusto del radio ---
     const rect = letrasContainer.getBoundingClientRect();
     const medidaReferencia = rect.width || 350;
-    const radio = (medidaReferencia / 2) * 0.95;
+    const radio = (medidaReferencia / 2) * 0.92;
     
     letras.forEach((letra, i) => {
         // Cálculo del ángulo para distribuir las letras en círculo
